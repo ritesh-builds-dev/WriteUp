@@ -1,16 +1,27 @@
-# React + Vite
+# WriteUp - Notes Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based application designed for efficient note management, featuring local data persistence and real-time search functionality.
 
-Currently, two official plugins are available:
+## 🔗 Live Demo
+**[View Live Project](https://ritesh-builds-dev.github.io/WriteUp/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Key Features
+* **Data Persistence:** Utilizes LocalStorage API to ensure note retention across browser sessions.
+* **Global Search Functionalilty:** Implements real-time filtering logic to retrieve notes by title or content instantly.
+* **Synchronized State Management:** Employs state lifting to synchronize data across Home and About routes.
+* **Live Note Analytics:** Features a dynamic counter on the About page that reflects the total number of notes stored.
+* **Full CRUD Logic:** Robust implementation for creating, rendering, and deleting note components.
+* **Responsive Architecture:** Fully optimized for seamless performance across mobile, tablet, and desktop displays.
 
-## React Compiler
+## Tech Stack
+* **Core Library:** React.js
+* **Navigation:** React Router DOM
+* **Styling:** CSS3
+* **Build Tool:** Vite
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Project Specifications
+* **Author:** RITESH RAMMOHAN CHOUDHARY
+* **Environment:** Node.js / Vite
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+*Developed by [Ritesh](https://github.com/ritesh-builds-dev)*
