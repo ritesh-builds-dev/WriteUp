@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import './About.css';
 
+// for title of the Webpage and also to show the total notes captured in the about page
 const About = ({ totalNotes = 0 }) => {
     useEffect(() => {
         document.title = "WriteUp | About";

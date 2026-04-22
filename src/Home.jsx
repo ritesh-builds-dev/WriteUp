@@ -2,14 +2,17 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Card from "../components/card";
 
-const Home = ({ notes, setNotes }) => {
+// for the home page where we can create new notes and also see the list of all the notes created and also edit and delete the notes
+
+const Home = ({ notes, setNotes, searchTerm, totalNotesCount }) => {
   const [currentNote, setcurrentNote] = useState({ title: "", desc: "", })
   const [iseditable, setIsEditable] = useState(false)
   const [editNoteData, setEditNoteData] = useState({ title: "", desc: "", id: null })
 
+  // for the title of the Webpage
   useEffect(() => {
-  document.title = "WriteUp | Home";
-}, []); 
+    document.title = "WriteUp | Home";
+  }, []);
 
   const startEdit = (note) => {
     setEditNoteData(note)
@@ -17,8 +20,9 @@ const Home = ({ notes, setNotes }) => {
   }
 
 
-
+// for handle the sumbit button of the note App. 
   const handleSubmit = (e) => {
+
     e.preventDefault()
     if (currentNote.title.length < 5) {
       alert("Title should be at least 5 characters")
@@ -47,16 +51,19 @@ const Home = ({ notes, setNotes }) => {
     localStorage.setItem('notes', JSON.stringify(updatedNotes))
   }
 
+  // for handling the change in the input fields of the form and store the data in the currentNote state variable
   const onChange = (e) => {
     setcurrentNote({ ...currentNote, [e.target.name]: e.target.value })
   }
 
+  // for handle the delete button of the note App.
   const deleteNote = (id) => {
     const updatedNotes = notes.filter(note => note.id !== id)
     setNotes(updatedNotes)
     localStorage.setItem('notes', JSON.stringify(updatedNotes))
   }
 
+  // for handle the edit button and update data in the note App.
   const handleUpdate = (e) => {
 
     e.preventDefault();
@@ -75,78 +82,88 @@ const Home = ({ notes, setNotes }) => {
     setIsEditable(false);
   };
 
+
   return (
-          <>
-            <main>
-              <h1>Create your note</h1>
-              <form onSubmit={handleSubmit}>
-                <div>
-                  <label htmlFor="title">Title</label>
-                  <input value={currentNote.title} type="text" name="title" id="title" onChange={onChange} />
-                </div>
-                <div>
-                  <label htmlFor="desc">Description</label>
-                  <textarea value={currentNote.desc} name="desc" id="desc" onChange={onChange}></textarea>
-                </div>
-                <button>Submit</button>
-              </form>
-            </main>
-            <section className='noteSection'>
-              <h2>Your Notes</h2>
-              <div className='container'>
-                {notes.map((note) => (
-                  <Card key={note.id} title={note.title} desc={note.desc} onDelete={() => deleteNote(note.id)} onEdit={() => startEdit(note)} />
-                ))}
-                {notes.length === 0 && <div>You haven't added any notes yet</div>}
-              </div>
-            </section>
+    <>
+      <main>
+        <h1>Create your note</h1>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="title">Title</label>
+            <input value={currentNote.title} type="text" name="title" id="title" onChange={onChange} />
+          </div>
+          <div>
+            <label htmlFor="desc">Description</label>
+            <textarea value={currentNote.desc} name="desc" id="desc" onChange={onChange}></textarea>
+          </div>
+          <button>Submit</button>
+        </form>
+      </main>
+      <section className='noteSection'>
+        <h2>Your Notes</h2>
+        <div className='container'>
+          {notes.map((note) => (
+            <Card key={note.id} title={note.title} desc={note.desc} onDelete={() => deleteNote(note.id)} onEdit={() => startEdit(note)} />
+          ))}
 
-
-            {iseditable && (
-              <div className="modal-overlay">
-                <div className="edit-modal">
-                  <h2>Edit Your Note</h2>
-
-                  <form onSubmit={handleUpdate}>
-                    <div className="input-group">
-                      <label htmlFor="edit-title">Title</label>
-                      <input
-                        id="edit-title"
-                        type="text"
-                        name="title"
-                        value={editNoteData.title}
-                        onChange={(e) => setEditNoteData({ ...editNoteData, title: e.target.value })}
-                        required />
-                    </div>
-
-                    <div className="input-group">
-                      <label htmlFor="edit-desc">Description</label>
-                      <textarea
-                        id="edit-desc"
-                        name="desc"
-                        value={editNoteData.desc}
-                        onChange={(e) => setEditNoteData({ ...editNoteData, desc: e.target.value })}
-                        required>
-                      </textarea>
-                    </div>
-
-                    <div className="modal-buttons">
-                      <button type="submit" className="update-btn">Save Changes</button>
-
-                      <button
-                        type="button"
-                        className="cancel-btn"
-                        onClick={() => setIsEditable(false)}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
+          <div className="message-container">
+            {totalNotesCount === 0 && !searchTerm && (
+              <p>You haven't added any notes yet.</p>
             )}
-          </>
+            {notes.length === 0 && searchTerm && (
+              <p>No notes found for "{searchTerm}"</p>
+            )}
+          </div>
+          
+        </div>
+      </section>
+
+      {/* for the edit modal of the note App. */}
+      {iseditable && (
+        <div className="modal-overlay">
+          <div className="edit-modal">
+            <h2>Edit Your Note</h2>
+
+            <form onSubmit={handleUpdate}>
+              <div className="input-group">
+                <label htmlFor="edit-title">Title</label>
+                <input
+                  id="edit-title"
+                  type="text"
+                  name="title"
+                  value={editNoteData.title}
+                  onChange={(e) => setEditNoteData({ ...editNoteData, title: e.target.value })}
+                  required />
+              </div>
+
+              <div className="input-group">
+                <label htmlFor="edit-desc">Description</label>
+                <textarea
+                  id="edit-desc"
+                  name="desc"
+                  value={editNoteData.desc}
+                  onChange={(e) => setEditNoteData({ ...editNoteData, desc: e.target.value })}
+                  required>
+                </textarea>
+              </div>
+
+              <div className="modal-buttons">
+                <button type="submit" className="update-btn">Save Changes</button>
+
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setIsEditable(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
-  
+
 export default Home;
