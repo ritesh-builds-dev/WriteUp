@@ -24,7 +24,7 @@ function App() {
   );
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/WriteUp">
       <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <Routes>
         <Route path="/" element={<Home

@@ -19,6 +19,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
             className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onBlur={() => setSearchTerm("")}
           />
         </div>
       </div>
